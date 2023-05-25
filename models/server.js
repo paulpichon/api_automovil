@@ -1,7 +1,9 @@
 //express
 const express = require('express');
 //cors
-const cors = require('cors')
+const cors = require('cors');
+//importar funcion para conexion a la BD
+const dbConnectionMongo = require('../database/config');
 
 class Server {
     //constructor
@@ -14,11 +16,18 @@ class Server {
         this.automovilesPath = '/api/automoviles'
 
 
+        //llamar metodo para conectar a la BD
+        this.conectarDB();
         //middleware
         this.middlewares();
         //routes
         this.routes();
 
+    }
+    //metodo para llamar la funcion para conectar a la BD
+    async conectarDB() {
+        //funcion para conectar a MONGO
+        await dbConnectionMongo();
     }
     //middlewares
     middlewares() {
