@@ -4,8 +4,12 @@ const automovilesGet = (req, res) => {
     });
 }
 const automovilesPost = (req, res) => {
+
+    //body
+    const body = req.body;
+
     res.json({
-        msg:'POST API - Controller'
+        body
     });
 }
 const automovilesPut = (req, res) => {
