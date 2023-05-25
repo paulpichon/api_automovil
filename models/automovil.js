@@ -33,5 +33,13 @@ const AutomovilSchema = Schema({
     }
 
 });
+//quitar __v de la respuesta 
+AutomovilSchema.methods.toJSON = function() {
+    //desestructurar lo que no quiero en la respuesta
+    const { __v, ...automovil } = this.toObject();
+    //retornamos todo aquello que no fue desestructurado en ...automovil
+    return automovil;
+}
+
 //exports
 module.exports = model('Automovil', AutomovilSchema);

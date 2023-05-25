@@ -1,16 +1,23 @@
+//importamos el modelo
+const Automovil = require("../models/automovil");
+
 const automovilesGet = (req, res) => {
     res.json({
         msg:'GET API - Controller'
     });
 }
-const automovilesPost = (req, res) => {
+const automovilesPost = async(req, res) => {
 
     //body
-    const body = req.body;
-
-    res.json({
-        body
-    });
+    const { marca, year, precio, puertas, transmision, color } = req.body;
+    //mongoose
+    const automovil = new Automovil({ marca, year, precio, puertas, transmision, color });
+    //guardar en la base de datos
+    await automovil.save();
+    //respuesta
+    res.json( 
+        automovil
+    );
 }
 const automovilesPut = (req, res) => {
     res.json({
