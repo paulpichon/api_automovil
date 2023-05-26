@@ -1,4 +1,4 @@
-//importamos el modelo
+//importamos el modelo 
 const Automovil = require("../models/automovil");
 
 const automovilesGet = async(req, res) => {
