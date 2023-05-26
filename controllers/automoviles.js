@@ -14,7 +14,8 @@ const automovilesGet = async(req, res) => {
         //mostrar el total de registros
         //const total = await Automovil.countDocuments();
         
-        const query = {estatus_vehiculo:true};
+        //consulta
+        const query = { estatus_vehiculo:true };
 
         //con promise.all hacemos los 2 awaits al mismo tiempo
         const [ automoviles, total ] = await Promise.all([
@@ -49,19 +50,25 @@ const automovilesPut = async(req, res) => {
     //body
     const { _id, ...resto } = req.body;
     //actualizar
-    const usuario = await Automovil.findByIdAndUpdate(id, resto, { 
+    const automovil = await Automovil.findByIdAndUpdate(id, resto, { 
         //actualizar consulta
         new: true
     });
 
 
-    res.json( usuario );
+    res.json( automovil );
 }
 const automovilesDelete = async(req, res) => {
-    //params
+    //id
     const { id } = req.params;
+    //eliminar registro
+    //const automovil = await Automovil.findByIdAndRemove( id )
+    //cambiar el estatus del automovil
+    const automovil = await Automovil.findByIdAndUpdate( id, { estatus_vehiculo: false }, {
+        new: true
+    });
     res.json({
-        id
+        automovil
     });
 }
 //exports

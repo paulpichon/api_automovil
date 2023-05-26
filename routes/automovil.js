@@ -9,6 +9,8 @@ const { automovilesGet,
 const { check } = require('express-validator');
 //importar middleware para mostrar los errores
 const { validarCampos } = require('../middlewares/validar-campos');
+//verificar si existe el automovil por ID
+const { existeAutomovilPorId } = require('../helpers/db-validators');
 const router = Router();
 
 //GET
@@ -52,6 +54,10 @@ router.post('/', [
 ], automovilesPost);
 //PUT
 router.put('/:id', [
+        //verificar que sea un mongo ID valido
+        check('id', 'El ID no es valido').isMongoId(),
+        //validar que el ID exista en la BD
+        check('id').custom( existeAutomovilPorId ),
         //validar que sea solo STRING en el campo MARCA
         check('marca', 'El campo MARCA no debe estar vacio, deben estar en mayusculas y no se permiten números.').optional().trim().not().isNumeric().notEmpty().isUppercase(),
         //validar que sea STRING en el campo MODELO
@@ -83,6 +89,13 @@ router.put('/:id', [
         validarCampos
 ], automovilesPut);
 //DELETE
-router.delete('/:id', automovilesDelete);
+router.delete('/:id', [
+        //verificar que sea un mongo ID valido
+        check('id', 'El ID no es valido').isMongoId(),
+        //validar que el ID exista en la BD
+        check('id').custom( existeAutomovilPorId ),
+        //middleware para mostrar los errores
+        validarCampos
+], automovilesDelete);
 //exports
 module.exports = router;
