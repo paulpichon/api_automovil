@@ -7,6 +7,10 @@ const AutomovilSchema = Schema({
         type: String,
         required: [true, 'La marca de automovil es obligatoria']
     },
+    modelo: { 
+        type: String,
+        required: [true, 'El modelo de automovil es obligatorio']
+    },
     year: { 
         type: Number,
         required: [true, 'El año del automovil es obligatorio']

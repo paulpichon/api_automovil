@@ -1,17 +1,40 @@
 //importamos el modelo
 const Automovil = require("../models/automovil");
 
-const automovilesGet = (req, res) => {
+const automovilesGet = async(req, res) => {
+
+    //limite y desde
+    //const { limite = 5, desde = 0 } = req.query;
+    //mostrar todos los automoviles
+    //const automoviles = await Automovil.find()
+        //limite de registros a traer
+        //.limit( limite )
+        //traer registros a partir desde
+        //.skip( desde );
+        //mostrar el total de registros
+        //const total = await Automovil.countDocuments();
+        
+        const query = {estatus_vehiculo:true};
+
+        //con promise.all hacemos los 2 awaits al mismo tiempo
+        const [ automoviles, total ] = await Promise.all([
+            Automovil.find( query ),
+            Automovil.countDocuments( query )
+        ]);
+
+
     res.json({
-        msg:'GET API - Controller'
+        total,
+        automoviles
     });
 }
 const automovilesPost = async(req, res) => {
 
     //body
-    const { marca, year, precio, puertas, transmision, color } = req.body;
+    const { marca, modelo, year, precio, puertas, transmision, color } = req.body;
     //mongoose
-    const automovil = new Automovil({ marca, year, precio, puertas, transmision, color });
+    const automovil = new Automovil({ marca, modelo, year, precio, puertas, transmision, color });
+
     //guardar en la base de datos
     await automovil.save();
     //respuesta
@@ -19,14 +42,26 @@ const automovilesPost = async(req, res) => {
         automovil
     );
 }
-const automovilesPut = (req, res) => {
-    res.json({
-        msg:'PUT API - Controller'
+const automovilesPut = async(req, res) => {
+
+    //params
+    const { id } = req.params;
+    //body
+    const { _id, ...resto } = req.body;
+    //actualizar
+    const usuario = await Automovil.findByIdAndUpdate(id, resto, { 
+        //actualizar consulta
+        new: true
     });
+
+
+    res.json( usuario );
 }
-const automovilesDelete = (req, res) => {
+const automovilesDelete = async(req, res) => {
+    //params
+    const { id } = req.params;
     res.json({
-        msg:'DELETE API - Controller'
+        id
     });
 }
 //exports
