@@ -43,12 +43,7 @@ router.post('/', [
         check('transmision', 'El campo TRANSMISION no debe estar vacio: AUTOMATICO, MANUAL')
                 .isIn(['AUTOMATICO', 'MANUAL']),
         //Validar que solo sea STRING en el campo COLOR
-        check('color', 'El campo COLOR no debe estar vacio y deben estar en mayusculas')
-                .trim()
-                .notEmpty()
-                .not()
-                .isNumeric()
-                .isUppercase(),
+        check('color', 'El campo COLOR no debe estar vacio y solo acepta letras en mayusculas').matches(/^[A-Z]+$/),
         //middleware para mostrar los errores
         validarCampos
 ], automovilesPost);
