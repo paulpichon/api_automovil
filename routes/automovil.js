@@ -2,9 +2,10 @@
 const { Router } = require('express');
 //importar los controladores
 const { automovilesGet, 
+        automovilGet,
         automovilesPost, 
         automovilesPut, 
-        automovilesDelete } = require('../controllers/automoviles');
+        automovilesDelete} = require('../controllers/automoviles');
 //express validator
 const { check } = require('express-validator');
 //importar middleware para mostrar los errores
@@ -13,7 +14,7 @@ const { validarCampos } = require('../middlewares/validar-campos');
 const { existeAutomovilPorId } = require('../helpers/db-validators');
 const router = Router();
 
-//GET
+//GET AUTOMOVILES
 router.get('/', [
         //validar que limite y desde sean numeros
         //check('limite', 'El parametro LIMITE debe ser de tipo NUMERO').optional().isNumeric(),
@@ -21,6 +22,15 @@ router.get('/', [
         //middleware para mostrar los errores
         //validarCampos
 ], automovilesGet);
+//GET automovil por ID
+router.get('/:id', [
+        //verificar que sea un mongo ID valido
+        check('id', 'El ID no es valido').isMongoId(),
+        //validar que el ID exista en la BD
+        check('id').custom( existeAutomovilPorId ),
+        //middleware para mostrar los errores
+        validarCampos
+], automovilGet);
 //POST
 router.post('/', [
         //validar que sea solo STRING en el campo MARCA

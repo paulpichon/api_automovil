@@ -1,6 +1,7 @@
 //importamos el modelo
 const Automovil = require("../models/automovil");
 
+// GET AUTOMOVILES
 const automovilesGet = async(req, res) => {
 
     //limite y desde
@@ -28,6 +29,18 @@ const automovilesGet = async(req, res) => {
         total,
         automoviles
     });
+}
+// GET AUTOMOVIL POR ID
+const automovilGet = async(req, res) => {
+
+    // ID automovil
+    const { id } = req.params;
+
+    //con promise.all hacemos los 2 awaits al mismo tiempo
+    const automovil = await Automovil.findById( id );
+
+
+    res.json( automovil );
 }
 const automovilesPost = async(req, res) => {
 
@@ -74,6 +87,7 @@ const automovilesDelete = async(req, res) => {
 //exports
 module.exports = {
     automovilesGet,
+    automovilGet,
     automovilesPost,
     automovilesPut,
     automovilesDelete
