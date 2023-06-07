@@ -31,14 +31,11 @@ router.post('/', [
                 .notEmpty()
                 .isUppercase(),
         //Validar que sean solo números en campo AÑO
-        check('year', 'El campo AÑO no debe estar vacio y solo permite números')
-                .isNumeric(),
+        check('year', 'El campo AÑO no debe estar vacio y solo permite números').isNumeric(),
         //Validar que sean solo números en el campos PRECIO
-        check('precio', 'El campo PRECIO no debe estar vacio y solo permite números')
-                .isNumeric(),
+        check('precio', 'El campo PRECIO no debe estar vacio y solo permite números').isNumeric(),
         //Validar que sean solo números en el campo PUERTAS
-        check('puertas', 'El campo PUERTAS no debe estar vacio y solo permite números')
-                .isNumeric(),
+        check('puertas', 'El campo PUERTAS no debe estar vacio y solo permite números').isNumeric(),
         //Validar que solo sea STRING en el campo TRASMISION
         check('transmision', 'El campo TRANSMISION no debe estar vacio: AUTOMATICO, MANUAL')
                 .isIn(['AUTOMATICO', 'MANUAL']),
@@ -66,17 +63,13 @@ router.put('/:id', [
                 .notEmpty()
                 .isUppercase(),
         //Validar que sean solo números en campo AÑO
-        check('year', 'El campo AÑO no debe estar vacio y solo permite números').optional()
-                .isNumeric(),
+        check('year', 'El campo AÑO no debe estar vacio y solo permite números').optional().isNumeric(),
         //Validar que sean solo números en el campos PRECIO
-        check('precio', 'El campo PRECIO no debe estar vacio y solo permite números').optional()
-                .isNumeric(),
+        check('precio', 'El campo PRECIO no debe estar vacio y solo permite números').optional().isNumeric(),
         //Validar que sean solo números en el campo PUERTAS
-        check('puertas', 'El campo PUERTAS no debe estar vacio y solo permite números').optional()
-                .isNumeric(),
+        check('puertas', 'El campo PUERTAS no debe estar vacio y solo permite números').optional().isNumeric(),
         //Validar que solo sea STRING en el campo TRASMISION
-        check('transmision', 'El campo TRANSMISION no debe estar vacio: AUTOMATICO, MANUAL').optional()
-                .isIn(['AUTOMATICO', 'MANUAL']),
+        check('transmision', 'El campo TRANSMISION no debe estar vacio: AUTOMATICO, MANUAL').optional().isIn(['AUTOMATICO', 'MANUAL']),
         //Validar que solo sea STRING en el campo COLOR
         check('color', 'El campo COLOR no debe estar vacio y deben estar en mayusculas').optional()
                 .trim()
